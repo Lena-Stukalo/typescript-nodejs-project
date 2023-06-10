@@ -1,2 +1,2 @@
 const controllers = <any>[]
-export controllers
+export {controllers}
