@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import express from 'express'
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -8,7 +9,7 @@ import {controllers} from '../app/api/controllers'
 dotenv.config();
 export class Tcp implements Iservice{
     private static instanse:Tcp;
-    private routePrefix='./api'
+    private routePrefix='/api'
     public server = express()
     constructor (){
         if (!Tcp.instanse){
@@ -24,7 +25,7 @@ export class Tcp implements Iservice{
         controllers,
         routePrefix
     })
-    return new Promise((resolve:any)=>{
+    return new Promise<boolean>((resolve:any)=>{
         mongoose
         .connect(process.env.DB_HOST!)
         .then(() => {
