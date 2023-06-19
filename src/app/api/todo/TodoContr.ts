@@ -2,14 +2,14 @@
 import{JsonController,Get,Post, Delete, Patch, Body, QueryParam, Res, Param } from 'routing-controllers'
 import { Response } from 'express';
 import { App } from "infra/App";
-import {PersonService}from './TodoService'
+import {TodoService}from './TodoService'
 import {ITodo} from './TodoTypes'
 
 
 @JsonController('/todo')
 export class Todo {
     public app = new App();
-    public service = new PersonService();
+    public service = new TodoService();
     @Post('/')
     async create (@Body() body:ITodo ,@Res() res:Response){
       const result =await this.service.create(body)

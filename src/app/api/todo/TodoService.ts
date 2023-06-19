@@ -3,7 +3,7 @@ import {Todos} from '../../../models/Todo'
 import {ITodo, IListId}from './TodoTypes'
 
 
-export class PersonService{
+export class TodoService{
 
 async create(data :ITodo){
 const result = await Todos.create(data)
