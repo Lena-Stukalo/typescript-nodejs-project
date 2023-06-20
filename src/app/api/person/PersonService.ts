@@ -3,19 +3,19 @@ import jwt from 'jsonwebtoken'
 import {RequestError}from '../../../helpers/RequestError'
 import {Person} from '../../../models/Person'
 import {IPersonSignUp,IPersonSignIn}from './PersonType'
-
+import{CustomRequest}from '../../../middlewares/authenticate'
 
 export class PersonService{
 
 async signUp(data :IPersonSignUp){
-    const {email, password, name}=data;
+    const {email, password}=data;
     const user = await Person.findOne({ email });
   if (user) {
     throw RequestError(409, "Email in use");
   }
   const hashPassword = await bcrypt.hash(password, 10);
   const payload = {
-    id: name
+    email:email
   };
   const token = jwt.sign(payload, process.env.SECRET_KEY!, { expiresIn: "24h" });
 const result = await Person.create({
@@ -37,11 +37,21 @@ async signIn(data:IPersonSignIn){
     throw RequestError(401, "Email or password wrong");
   }
   const payload = {
-    id: user._id,
+    email:email
   };
   const token = jwt.sign(payload, process.env.SECRET_KEY!, { expiresIn: "24h" });
   await Person.findByIdAndUpdate(user._id, { token });
   return token
 }
-
+async current (req:CustomRequest){
+    const { email, name } = req.user;
+    return {name,email}
+}
+async logout(req:CustomRequest){
+    const { _id } = req.user;
+    await Person.findByIdAndUpdate(_id, { token: "" });
+    return {
+      message: "Logout success",
+    };
+}
 }
