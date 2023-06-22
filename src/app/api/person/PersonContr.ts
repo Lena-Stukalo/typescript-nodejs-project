@@ -1,10 +1,10 @@
-import{JsonController,Get,Post,Body,Res, HeaderParam,Req } from 'routing-controllers'
+import{JsonController,Get,Post,Body,Res, Req,UseBefore } from 'routing-controllers'
 import { Response } from 'express';
 import { App } from "infra/App";
 import{IPersonSignUp,IPersonSignIn}from './PersonType'
 import{PersonService}from './PersonService'
-import{authenticate}from '../../../middlewares/authenticate'
 import{CustomRequest}from '../../../middlewares/authenticate'
+import { MyMiddleware } from 'middlewares/Middelwares';
 
 
 @JsonController('/person')
@@ -16,7 +16,7 @@ export class Person {
         const result =await this.service.signUp(body)
         return res.status(201).json({name:result.name,
         email:result.email,
-    token:result})
+    token:result.token})
     }
     @Post('/signIn')
     async signIn(@Body() body:IPersonSignIn ,@Res() res:Response){
@@ -24,15 +24,16 @@ export class Person {
         return res.status(200).json({token:result})
     }
     @Get('/current')
-    async current(@HeaderParam('authorization') authorization:string, @Req() req:CustomRequest, @Res() res:Response){
-        const cusReq=await authenticate(authorization,req);
-        const result =await this.service.current(cusReq)
+    @UseBefore(MyMiddleware)
+    async current(@Req() req:CustomRequest, @Res() res:Response){
+       
+        const result =await this.service.current(req)
                 return res.status(200).json(result)
     }
     @Get('/logout')
-    async logOut(@HeaderParam('authorization') authorization:string,@Req() req:CustomRequest,@Res() res:Response){
-        const cusReq=await authenticate(authorization,req);
-        const result =await this.service.logout(cusReq)
+    @UseBefore(MyMiddleware)
+    async logOut(@Req() req:CustomRequest,@Res() res:Response){
+        const result =await this.service.logout(req)
         return res.status(200).json(result)
     }
 

@@ -11,7 +11,7 @@ export interface IDecoded {
    export interface CustomRequest extends Request {
     user: IPersonDB
    }
-export const authenticate = async (auth:string, req:CustomRequest):Promise<CustomRequest> => {
+export async function  authenticate (auth:string | undefined, req:CustomRequest):Promise<CustomRequest> {
     try {
         const [bearer, token] = auth!.split(" ");
         if (bearer !== "Bearer") {

@@ -2,7 +2,7 @@ import { Schema, model} from 'mongoose';
 
 interface IList {
     name: string;
-    owner: object,
+    owner: Schema.Types.ObjectId,
   }
   const listSchema = new Schema<IList>(
     {
