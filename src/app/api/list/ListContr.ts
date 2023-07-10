@@ -1,6 +1,6 @@
 import { Response} from 'express';
 import{JsonController,Get,Post, Delete, Patch, UseBefore,Req, Res, Body,Param,QueryParam } from 'routing-controllers'
-import { App } from "infra/App";
+import { App } from "../../../infra/App";
 import { MyMiddleware} from '../../../middlewares/Middelwares'
 import{CustomRequest} from '../../../middlewares/authenticate'
 import { ListService } from './ListService';

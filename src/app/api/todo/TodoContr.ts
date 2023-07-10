@@ -1,7 +1,7 @@
 
 import{JsonController,Get,Post, Delete, Patch, Body, QueryParam, Res, Param } from 'routing-controllers'
 import { Response } from 'express';
-import { App } from "infra/App";
+import { App } from "../../../infra/App";
 import {TodoService}from './TodoService'
 import {ITodo} from './TodoTypes'
 

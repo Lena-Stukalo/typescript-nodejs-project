@@ -1,10 +1,10 @@
 import{JsonController,Get,Post,Body,Res, Req,UseBefore } from 'routing-controllers'
 import { Response } from 'express';
-import { App } from "infra/App";
+import { App } from "../../../infra/App";
 import{IPersonSignUp,IPersonSignIn}from './PersonType'
 import{PersonService}from './PersonService'
 import{CustomRequest}from '../../../middlewares/authenticate'
-import { MyMiddleware } from 'middlewares/Middelwares';
+import { MyMiddleware } from '../../../middlewares/Middelwares';
 
 
 @JsonController('/person')

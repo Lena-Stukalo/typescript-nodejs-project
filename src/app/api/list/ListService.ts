@@ -1,8 +1,8 @@
-import { List } from "models/List";
-import { Todos } from "models/Todo";
+import { List } from "../../../models/List";
+import { Todos } from "../../../models/Todo";
 import { CustomRequest } from "middlewares/authenticate";
 import { IList } from "./ListType";
-import { RequestError } from 'helpers/RequestError';
+import { RequestError } from '../../../helpers/RequestError';
 export class ListService{
 
 async create(req:CustomRequest,body:IList ){
